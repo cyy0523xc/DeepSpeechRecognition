@@ -44,7 +44,7 @@ print("训练声学模型...")
 print("*"*80)
 am_args = am_hparams()
 am_args.vocab_size = len(train_data.am_vocab)
-#am_args.gpu_nums = 1
+# am_args.gpu_nums = 1
 am_args.gpus = 2
 am_args.lr = 0.0008
 am_args.is_training = True
@@ -73,7 +73,10 @@ checkpoint = ModelCheckpoint(os.path.join('./checkpoint', ckpt),
 batch = train_data.get_am_batch()
 dev_batch = dev_data.get_am_batch()
 
-am.ctc_model.fit_generator(batch, steps_per_epoch=batch_num, epochs=epochs, callbacks=[checkpoint], workers=1, use_multiprocessing=False, validation_data=dev_batch, validation_steps=200)
+am.ctc_model.fit_generator(batch, steps_per_epoch=batch_num, epochs=epochs,
+                           callbacks=[checkpoint], workers=1,
+                           use_multiprocessing=False,
+                           validation_data=dev_batch, validation_steps=200)
 am.ctc_model.save_weights('logs_am/model.h5')
 
 
@@ -95,7 +98,7 @@ lm = Lm(lm_args)
 
 epochs = 10
 with lm.graph.as_default():
-    saver =tf.train.Saver()
+    saver = tf.train.Saver()
 with tf.Session(graph=lm.graph) as sess:
     merged = tf.summary.merge_all()
     sess.run(tf.global_variables_initializer())
@@ -112,10 +115,10 @@ with tf.Session(graph=lm.graph) as sess:
         for i in range(batch_num):
             input_batch, label_batch = next(batch)
             feed = {lm.x: input_batch, lm.y: label_batch}
-            cost,_ = sess.run([lm.mean_loss,lm.train_op], feed_dict=feed)
+            cost, _ = sess.run([lm.mean_loss, lm.train_op], feed_dict=feed)
             total_loss += cost
             if (k * batch_num + i) % 10 == 0:
-                rs=sess.run(merged, feed_dict=feed)
+                rs = sess.run(merged, feed_dict=feed)
                 writer.add_summary(rs, k * batch_num + i)
         print('epochs', k+1, ': average loss = ', total_loss/batch_num)
     saver.save(sess, 'logs_lm/model_%d' % (epochs + add_num))
