@@ -2,6 +2,8 @@ import os
 import tensorflow as tf
 from utils import get_data, data_hparams
 from keras.callbacks import ModelCheckpoint
+from model_speech.cnn_ctc import Am, am_hparams
+from model_language.transformer import Lm, lm_hparams
 
 
 # 0.准备训练所需数据------------------------------
@@ -13,8 +15,8 @@ data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
 data_args.batch_size = 4
-data_args.data_length = 10
-# data_args.data_length = None
+# data_args.data_length = 10
+data_args.data_length = None
 data_args.shuffle = True
 train_data = get_data(data_args)
 
@@ -26,8 +28,8 @@ data_args.thchs30 = True
 data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
-data_args.batch_size = 4
-# data_args.data_length = None
+# data_args.batch_size = 4
+data_args.data_length = None
 data_args.data_length = 10
 data_args.shuffle = True
 dev_data = get_data(data_args)
@@ -36,7 +38,6 @@ dev_data = get_data(data_args)
 print("*"*80)
 print("训练声学模型...")
 print("*"*80)
-from model_speech.cnn_ctc import Am, am_hparams
 am_args = am_hparams()
 am_args.vocab_size = len(train_data.am_vocab)
 #am_args.gpu_nums = 1
@@ -76,7 +77,6 @@ am.ctc_model.save_weights('logs_am/model.h5')
 print("*"*80)
 print("训练语言模型...")
 print("*"*80)
-from model_language.transformer import Lm, lm_hparams
 lm_args = lm_hparams()
 lm_args.num_heads = 8
 lm_args.num_blocks = 6
