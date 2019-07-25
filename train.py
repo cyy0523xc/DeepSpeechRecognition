@@ -28,9 +28,9 @@ data_args.thchs30 = True
 data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
-# data_args.batch_size = 4
+data_args.batch_size = 4
 data_args.data_length = None
-data_args.data_length = 10
+# data_args.data_length = 10
 data_args.shuffle = True
 dev_data = get_data(data_args)
 
