@@ -1,6 +1,8 @@
 #!/bin/bash
 # 
 # 容器启动
+# dockerfile: 
+# https://github.com/ibbd/dockerfile-tensorflow/speech/cu101-py36-u1804-tf.Dockerfile
 # Author: alex
 # Created Time: 2019年07月25日 星期四 17时51分49秒
 
