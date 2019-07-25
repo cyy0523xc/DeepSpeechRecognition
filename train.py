@@ -53,9 +53,9 @@ epochs = 20
 batch_num = len(train_data.wav_lst) // train_data.batch_size
 
 # checkpoint
-ckpt = "model_{epoch:02d}-{val_acc:.2f}.hdf5"
+ckpt = "model_{epoch:02d}-{val_loss:.2f}.hdf5"
 checkpoint = ModelCheckpoint(os.path.join('./checkpoint', ckpt),
-                             monitor='val_acc', save_weights_only=False,
+                             monitor='val_loss', save_weights_only=False,
                              verbose=1, save_best_only=True)
 
 #
