@@ -14,7 +14,11 @@ data_args.thchs30 = True
 data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
-data_args.batch_size = 16
+# 系统空余内存15G
+# 设置为32时：
+# Allocation of 897843200 exceeds 10% of system memory.
+# 设置为16时，一步耗时约12秒
+data_args.batch_size = 32
 # data_args.data_length = 10
 data_args.data_length = None
 data_args.shuffle = True
@@ -28,7 +32,7 @@ data_args.thchs30 = True
 data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
-data_args.batch_size = 16
+data_args.batch_size = 32
 data_args.data_length = None
 # data_args.data_length = 10
 data_args.shuffle = True
