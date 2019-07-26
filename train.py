@@ -1,10 +1,16 @@
 import os
+from time import time
 import tensorflow as tf
 from utils import get_data, data_hparams
 from keras.callbacks import ModelCheckpoint
 from model_speech.cnn_ctc import Am, am_hparams
 from model_language.transformer import Lm, lm_hparams
 
+# TF1.14.0会报错：
+# AttributeError: '_TfDeviceCaptureOp' object has no attribute '_set_device_from_string'
+
+# 开始时间
+start_time = time()
 
 # 0.准备训练所需数据------------------------------
 data_args = data_hparams()
@@ -78,8 +84,12 @@ am.ctc_model.fit_generator(batch, steps_per_epoch=batch_num, epochs=epochs,
                            validation_data=dev_batch, validation_steps=200)
 am.ctc_model.save_weights('logs_am/model.h5')
 
+speech_time = time() - start_time
+print("训练声学模型: ", speech_time)
+
 
 # 2.语言模型训练-------------------------------------------
+start_time = time()
 print("*"*80)
 print("训练语言模型...")
 print("*"*80)
@@ -122,3 +132,7 @@ with tf.Session(graph=lm.graph) as sess:
         print('epochs', k+1, ': average loss = ', total_loss/batch_num)
     saver.save(sess, 'logs_lm/model_%d' % (epochs + add_num))
     writer.close()
+
+print("*"*80)
+print("训练声学模型: ", speech_time)
+print("训练语言模型: ", time()-start_time)
