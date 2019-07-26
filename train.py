@@ -107,7 +107,7 @@ lm_args.lr = 0.0003
 lm_args.is_training = True
 lm = Lm(lm_args)
 
-epochs = 5
+epochs = 10
 with lm.graph.as_default():
     saver = tf.train.Saver()
 with tf.Session(graph=lm.graph) as sess:
