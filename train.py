@@ -25,7 +25,7 @@ data_args.stcmd = False
 # Allocation of 897843200 exceeds 10% of system memory.
 # 使用cpu训练：设置为16时，一步耗时约12秒
 # 2080TI可以设置为32，显存几乎100%，272s/epoch 872ms/step
-data_args.batch_size = 32
+data_args.batch_size = 64
 # data_args.data_length = 10
 data_args.data_length = None
 data_args.shuffle = True
@@ -39,7 +39,7 @@ data_args.thchs30 = True
 data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
-data_args.batch_size = 32
+data_args.batch_size = 64
 data_args.data_length = None
 # data_args.data_length = 10
 data_args.shuffle = True
@@ -60,7 +60,7 @@ if os.path.exists('logs_am/model.h5'):
     print('load acoustic model...')
     am.ctc_model.load_weights('logs_am/model.h5')
 
-epochs = 20
+epochs = 10
 batch_num = len(train_data.wav_lst) // train_data.batch_size
 
 # checkpoint
