@@ -23,7 +23,8 @@ data_args.stcmd = False
 # 系统空余内存15G
 # 设置为32时：
 # Allocation of 897843200 exceeds 10% of system memory.
-# 设置为16时，一步耗时约12秒
+# 使用cpu训练：设置为16时，一步耗时约12秒
+# 2080TI可以设置为32，显存几乎100%，272s/epoch 872ms/step
 data_args.batch_size = 32
 # data_args.data_length = 10
 data_args.data_length = None

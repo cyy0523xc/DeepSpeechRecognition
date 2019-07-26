@@ -67,13 +67,10 @@ class Am():
         self.ctc_model.compile(loss={'ctc': lambda y_true, output: output}, optimizer=opt)
 
 
-
-
-
 # ============================模型组件=================================
 def conv2d(size):
-    return Conv2D(size, (3,3), use_bias=True, activation='relu',
-        padding='same', kernel_initializer='he_normal')
+    return Conv2D(size, (3, 3), use_bias=True, activation='relu',
+                  padding='same', kernel_initializer='he_normal')
 
 
 def norm(x):
@@ -81,12 +78,12 @@ def norm(x):
 
 
 def maxpool(x):
-    return MaxPooling2D(pool_size=(2,2), strides=None, padding="valid")(x)
+    return MaxPooling2D(pool_size=(2, 2), strides=None, padding="valid")(x)
 
 
 def dense(units, activation="relu"):
     return Dense(units, activation=activation, use_bias=True,
-        kernel_initializer='he_normal')
+                 kernel_initializer='he_normal')
 
 
 # x.shape=(none, none, none)
