@@ -1,4 +1,4 @@
-import keras
+# import keras
 from keras.layers import Input, Conv2D, BatchNormalization, MaxPooling2D
 from keras.layers import Reshape, Dense, Dropout, Lambda
 from keras.optimizers import Adam
@@ -59,7 +59,11 @@ class Am():
     def opt_init(self):
         opt = Adam(lr = self.lr, beta_1 = 0.9, beta_2 = 0.999, decay = 0.01, epsilon = 10e-8)
         if self.gpu_nums > 1:
-            self.ctc_model=multi_gpu_model(self.ctc_model,gpus=self.gpu_nums)
+            # alueError: To call `multi_gpu_model` with `gpus=2`,
+            # we expect the following devices to be available: ['/cpu:0', '/gpu:0', '/gpu:1'].
+            # However this machine only has: ['/cpu:0', '/xla_gpu:0', '/xla_gpu:1', '/xla_cpu:0']. Try reducing `gpus`.
+            # self.ctc_model = multi_gpu_model(self.ctc_model, gpus=self.gpu_nums)
+            self.ctc_model = multi_gpu_model(self.ctc_model)
         self.ctc_model.compile(loss={'ctc': lambda y_true, output: output}, optimizer=opt)
 
 
