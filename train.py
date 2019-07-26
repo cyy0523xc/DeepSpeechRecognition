@@ -44,7 +44,7 @@ print("训练声学模型...")
 print("*"*80)
 am_args = am_hparams()
 am_args.vocab_size = len(train_data.am_vocab)
-am_args.gpu_nums = 1
+am_args.gpu_nums = 2
 am_args.lr = 0.0008
 am_args.is_training = True
 am = Am(am_args)
