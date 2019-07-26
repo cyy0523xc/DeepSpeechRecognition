@@ -9,6 +9,12 @@ from model_language.transformer import Lm, lm_hparams
 
 # 0.准备解码所需字典，参数需和训练一致，也可以将字典保存到本地，直接进行读取
 data_args = data_hparams()
+data_args.data_type = 'train'
+data_args.data_path = '/corpus/'
+data_args.thchs30 = True
+data_args.aishell = False
+data_args.prime = False
+data_args.stcmd = False
 train_data = get_data(data_args)
 
 # 1.声学模型-----------------------------------
