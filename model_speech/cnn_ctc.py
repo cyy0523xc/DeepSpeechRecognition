@@ -11,10 +11,10 @@ import tensorflow as tf
 def am_hparams():
     params = tf.contrib.training.HParams(
         # vocab
-        vocab_size = 50,
-        lr = 0.0008,
-        gpu_nums = 1,
-        is_training = True)
+        vocab_size=50,
+        lr=0.0008,
+        gpu_nums=1,
+        is_training=True)
     return params
 
 
@@ -54,17 +54,16 @@ class Am():
         self.loss_out = Lambda(ctc_lambda, output_shape=(1,), name='ctc')\
             ([self.labels, self.outputs, self.input_length, self.label_length])
         self.ctc_model = Model(inputs=[self.labels, self.inputs,
-            self.input_length, self.label_length], outputs=self.loss_out)
+                                       self.input_length, self.label_length],
+                               outputs=self.loss_out)
 
     def opt_init(self):
-        opt = Adam(lr = self.lr, beta_1 = 0.9, beta_2 = 0.999, decay = 0.01, epsilon = 10e-8)
+        opt = Adam(lr = self.lr, beta_1 = 0.9, beta_2 = 0.999, decay = 0.01,
+                   epsilon = 10e-8)
         if self.gpu_nums > 1:
-            # alueError: To call `multi_gpu_model` with `gpus=2`,
-            # we expect the following devices to be available: ['/cpu:0', '/gpu:0', '/gpu:1'].
-            # However this machine only has: ['/cpu:0', '/xla_gpu:0', '/xla_gpu:1', '/xla_cpu:0']. Try reducing `gpus`.
             self.ctc_model = multi_gpu_model(self.ctc_model, gpus=self.gpu_nums)
-            # self.ctc_model = multi_gpu_model(self.ctc_model)
-        self.ctc_model.compile(loss={'ctc': lambda y_true, output: output}, optimizer=opt)
+        self.ctc_model.compile(loss={'ctc': lambda y_true, output: output},
+                               optimizer=opt)
 
 
 # ============================模型组件=================================
