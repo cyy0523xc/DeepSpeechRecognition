@@ -25,9 +25,9 @@ data_args.stcmd = False
 # Allocation of 897843200 exceeds 10% of system memory.
 # 使用cpu训练：设置为16时，一步耗时约12秒
 # 2080TI可以设置为32，显存几乎100%，272s/epoch 872ms/step
-data_args.batch_size = 64
-# data_args.data_length = 10
-data_args.data_length = None
+data_args.batch_size = 32
+data_args.data_length = 10000 // 32
+# data_args.data_length = None
 data_args.shuffle = True
 train_data = get_data(data_args)
 
@@ -39,9 +39,10 @@ data_args.thchs30 = True
 data_args.aishell = False
 data_args.prime = False
 data_args.stcmd = False
-data_args.batch_size = 64
-data_args.data_length = None
+data_args.batch_size = 32
+# data_args.data_length = None
 # data_args.data_length = 10
+data_args.data_length = 10000 // 32
 data_args.shuffle = True
 dev_data = get_data(data_args)
 
